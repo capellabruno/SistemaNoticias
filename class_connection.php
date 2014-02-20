@@ -34,6 +34,44 @@ abstract class CLASS_CONNECTION{
       
       mysql_selected_db(DB_CONNECTION, $connection);
   }
+  
+  function CloseConnection($useMysqli=false){
+    if($connection){
+      if($useMysqli){
+        mysqli_close($connection);
+      }else{
+        
+        mysql_close($connection);
+      }
+    }
+    
+  }
+  
+  function ExecSelect($sqlQuery, $useMysqli=false){
+    
+    CLASS_CONNECTION::OpenConnection($useMysqli);
+    
+    $dados =null;
+    $exec = null;
+    
+    unset($dados);
+    
+    if ($useMysqli){
+      $exec = mysqli_query($connection, $sqlQuery);
+      for($i=0;$i<mysqli_num_rows($exec);$i++){
+          $row = mysqli_fetch_array($exec);
+          foreach($row as $key =>$value)
+            $dados[$i][$key] =$value;
+      }
+    }else{
+      $exec = mysql_query($sqlQuery, $connection);
+    }
+    
+    CLASS_CONNECTION::CloseConnection($useMysqli);
+    
+    return $dados;
+    
+  }
 
 
 }
