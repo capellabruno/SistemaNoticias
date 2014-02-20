@@ -65,6 +65,11 @@ abstract class CLASS_CONNECTION{
       }
     }else{
       $exec = mysql_query($sqlQuery, $connection);
+      for($i=0;$i<mysql_num_rows($exec);$i++){
+          $row = mysql_fetch_array($exec);
+          foreach($row as $key =>$value)
+            $dados[$i][$key] =$value;
+      }
     }
     
     CLASS_CONNECTION::CloseConnection($useMysqli);
