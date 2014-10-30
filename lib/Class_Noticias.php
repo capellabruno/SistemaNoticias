@@ -87,10 +87,46 @@ class NOTICIAS_NEGOC{
 	
 	function Atualizar(NOTICIA $noticia){}
 
-	function ListarTodos(){}
-	
-	function ListarPaginado($limite=20, $pagina =1){
+	function ListarTodos(){
+		$dados=array();
 		
+		$CAMPOS = array("id_noticia", "titulo", "autor", "previa", "descricao_completa", "ativa", "caminho_imagem", "fonte_url", "views", "data_criacao");
+		$QUERY_SELECT_BASE = "SELECT [0] FROM noticias";
+		$query = str_replace("[0]", $CAMPOS, $QUERY_SELECT_BASE);
+		
+		$internal_conn = CLASS_CONNECTION::GetConnection();
+		$internal_query = $internal_conn->prepare($query);
+		$internal_query->execute();
+		
+		unset($dados);
+		$internal_query->bind_result($dados);
+		$internal_query->fetch();
+		
+		$internal_query->close();
+		$internal_conn->close();
+		
+		return $dados;
+	}
+	
+	function ListarPaginado($limite=20, $pagina =1, NOTICIA $noticia){
+		$dados=array();
+		$CAMPOS = array("id_noticia", "titulo", "autor", "previa", "descricao_completa", "ativa", "caminho_imagem", "fonte_url", "views", "data_criacao");
+		$QUERY_SELECT_BASE = "SELECT [0] FROM noticias";
+		$query = str_replace("[0]", $CAMPOS, $QUERY_SELECT_BASE);
+		
+		
+		$internal_conn = CLASS_CONNECTION::GetConnection();
+		$internal_query = $internal_conn->prepare($query);
+		$internal_query->execute();
+		
+		unset($dados);
+		$internal_query->bind_result($dados);
+		$internal_query->fetch();
+		
+		$internal_query->close();
+		$internal_conn->close();
+		
+		return $dados;
 	}
 		
 }
