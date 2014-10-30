@@ -2,7 +2,6 @@
 
 class NOTICIAS_NEGOC{
   	public $____QUERY_SELECT_BASE = "SELECT [0] FROM noticias";
-	public $____QUERY_DELETE_BASE = "DELETE FROM noticias WHERE [1] = [2] ";
 	public $____QUERY_UPDATE_BASE = "UPDATE noticias SET [1] WHERE [2]";
 	
 	function Inserir(NOTICIA $noticia){
@@ -66,7 +65,25 @@ class NOTICIAS_NEGOC{
         return $rows_affacteds;
 	}
 
-	function Deletar(NOTICIA $noticia){}
+	function Deletar(NOTICIA $noticia){
+		$query ="DELETE FROM noticias WHERE id_noticia = ? ";
+	        $internal_conn=NULL;
+	        $internal_query = NULL;
+	        $rows_affacteds = 0;
+		
+		if ($noticia->id_noticia <=0){
+			exit(utf_decode('Código da notícia não foi informado'));
+		}
+		
+		$internal_conn = CLASS_CONNECTION::GetConnection();	
+		$internal_query = $internal_conn->prepare($query);
+		$internal_query->bind_param('i', $noticia->id_noticia);
+        	$internal_query->execute();
+
+        	$rows_affacteds = $internal_query->affected_rows;
+        	
+        	return $rows_affacteds;
+	}
 	
 	function Atualizar(NOTICIA $noticia){}
 
