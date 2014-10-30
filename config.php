@@ -1,27 +1,18 @@
 <?php
-  /*
-    Config application 
-    defines the physical and web sites
-    include files
-  */
+
+header("Cache-Control: no-cache, must-revalidate");
+header ('Content-type: text/html; charset=ISO-8859-1');
+
+  define("LOCALPHYSICAL",$_SERVER["DOCUMENT_ROOT"]);
+  define("MYHOST", $_SERVER["HTTP_HOST"]);
+  define("MYHOSTACTUAL", $_SERVER["REQUEST_URI"]);
+  define("REQUESTHTTPS", $_SERVER["HTTPS"]);
+  define("MYSELF", $_SERVER["PHP_SELF"]);
   
-  DEFINE("LOCALPHYSICAL",$_SERVER["DOCUMENT_ROOT"]);
-  DEFINE("MYHOST", $_SERVER["HTTP_HOST"]);
-  DEFINE("MYHOSTACTUAL", $_SERVER["REQUEST_URI"]);
-  DEFINE("URLREFER", $_SERVER["HTTP_REFERER"]);
-  DEFINE("REQUESTHTTPS", $_SERVER["HTTPS"]);
-  DEFINE("MYSELF", $_SERVER["PHP_SELF"]);
-  
-  require_once("./class_connection.php");
-  
-  /*
-    settings to use the SMART
-  */  
-  
-  
-  /*
-    end
-  */
-  
-  
+  require_once("config/class_connection.php");
+
+  require_once("domain/Noticia.php");
+  require_once("lib/Class_Noticias.php");
+
+
 ?>

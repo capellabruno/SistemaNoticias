@@ -1,0 +1,13 @@
+CREATE TABLE noticias(
+id_noticia bigint not null auto_increment, 
+titulo varchar(200) not null, 
+autor varchar(200) null, 
+previa varchar(300) null, 
+descricao_completa varchar(9000) not null, 
+ativa bit null default 1,  
+caminho_imagem varchar(100) null, 
+fonte_url varchar(300) null, 
+views bigint null default 0,
+data_criacao datetime null default NOW(),
+primary key(id_noticia)
+);
