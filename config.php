@@ -1,7 +1,7 @@
 <?php
 
 header("Cache-Control: no-cache, must-revalidate");
-header ('Content-type: text/html; charset=ISO-8859-1');
+header ('Content-type: text/html; charset=UTF-8');
 
   define("LOCALPHYSICAL",$_SERVER["DOCUMENT_ROOT"]);
   define("MYHOST", $_SERVER["HTTP_HOST"]);
