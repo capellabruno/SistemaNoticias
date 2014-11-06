@@ -142,6 +142,62 @@
     
         }
     
+        function BuscarPorId($id_noticia){
+    
+            $dados=array();
+            $query_column ="";
+            $obj = new NOTICIA();
+            $loop=0;
+    
+    
+            $CAMPOS = array("id_noticia", "titulo", "autor", "previa", "descricao_completa", "ativa", "caminho_imagem", "fonte_url", "views", "data_criacao");
+            $QUERY_SELECT_BASE = "SELECT [0] FROM noticias WHERE id_noticia = " . intval($id_noticia);
+    
+            foreach($CAMPOS as $value){
+                if(empty($query_column)==TRUE){
+                    $query_column = $value;
+                }else{
+                    $query_column .= "," . $value;
+                }
+            }
+    
+            $query = str_replace("[0]", $query_column, $QUERY_SELECT_BASE);                         
+    
+            CLASS_CONNECTION::OpenConnection();
+            $internal_conn = CLASS_CONNECTION::GetConnection();
+            $internal_query = $internal_conn->prepare($query);
+            $internal_query->execute();
+    
+            unset($dados);
+    
+            /*$internal_query->bind_result("i", $id_noticia);*/
+    
+            $internal_query->store_result();
+    
+            $data = array();
+            $var = array();
+            $meta = $internal_query->result_metadata();
+    
+            while($field = $meta->fetch_field()){
+                $variables[] = &$data[$field->name];
+            }
+    
+            call_user_func_array(array($internal_query, 'bind_result'), $variables);
+    
+            while($internal_query->fetch()){
+                $dados[$loop] = array();
+                foreach($data as $k=>$v){
+                    $dados[$loop][$k] = utf8_decode($v);
+                }
+            $loop++;
+            }
+    
+            $internal_query->close();
+            $internal_conn->close();
+    
+            return $dados;
+        }
+    
         function ListarPaginado($limite=20, $pagina =1){
             $dados=array();
             $query_column ="";

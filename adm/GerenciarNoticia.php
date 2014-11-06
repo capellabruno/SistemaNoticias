@@ -22,6 +22,20 @@
         <script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-        
+        <?php
+            
+            require_once('header.php');
+        ?>
+        <?php
+            if(isset($_POST['edit'])){
+                require_once("editar.php");
+            }elseif(isset($_POST['remove'])){
+                require_once('remover.php');
+            }elseif(isset($_POST['create'])){
+                require_once("editar.php");
+            }else{
+                require_once('listaTodas.php');
+            }
+        ?>
     </body>
 </html>
