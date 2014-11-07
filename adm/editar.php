@@ -1,6 +1,5 @@
 <?php
     
-    
     $label_button ="Incluir";
     $url ="add_news_release.php";
     $url_update ="update_news_release.php";
@@ -28,21 +27,35 @@
         $id_noticia = $_POST["noticiaSelecionada"];
     
         $dadospage =$obj->BuscarPorId($id_noticia);
-        
+    
         $titulo = $dadospage[0]['titulo'];
         $autor = $dadospage[0]['autor'];
         $previa = $dadospage[0]['previa'];
         $descricao = $dadospage[0]['descricao_completa'];
         $fonte = $dadospage[0]['fonte_url'];
     }
-    
 ?>
 <div class="container">
     <div class="row">
         <form action="<?php echo ((!$ehUpdate) ? $url : $url_update);?>"
               role="form"
-              class="form-horizontal">
-
+              class="form-horizontal"
+              method="post">
+            <?php
+                if(isset($_SESSION["_erro_validacao"]) && !empty($_SESSION["_erro_validacao"])){
+            ?>
+            <div class="alert alert-danger"><?php echo $_SESSION["_erro_validacao"]; ?></div>
+            <?php
+                
+                }
+                
+                if(isset($_SESSION["insertText"]) && !empty($_SESSION["insertText"])){
+            ?>
+            <div class="alert alert-info"><?php echo $_SESSION["insertText"]; ?></div>
+            <?php
+                }
+            ?>
+            <input type="hidden" name="noticiaSelecionada" id="noticiaSelecionada" value="<?php echo $id_noticia?>" />
             <div class="form-group">
                 <label class="col-sm-2 control-label"
                        for="txtTitulo">Título</label>
@@ -50,7 +63,7 @@
                     <input type="text"
                            class="form-control"
                            id="txtTitutlo"
-                           name="txtTitutlo"
+                           name="txtTitulo"
                            placeholder="Título da notícia"
                            value="<?php echo $titulo; ?>" />
                 </div>
@@ -124,10 +137,15 @@
     </div>
 </div>
 
-<script src="//cdn.ckeditor.com/4.4.5.1/standard/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js"></script>
 <script type="text/javascript">
     CKEDITOR.replace('txtPrevia');   
 </script>
 <script type="text/javascript">
     CKEDITOR.replace('txtDescricao');   
 </script>
+
+<?php
+  $_SESSION['insertText']="";
+  $_SESSION["_erro_validacao"]="";    
+?>

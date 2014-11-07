@@ -2,6 +2,8 @@
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
     
+    session_start();
+
     header("Cache-Control: no-cache, must-revalidate");
     header ('Content-type: text/html; charset=UTF-8');
     
